@@ -43,7 +43,7 @@
         //     }
         // }
 
-        // Approach 2: Better solution: time Complexity => O(2 M X N), space Complexity => O(M+N)
+// Approach 2: Better solution: time Complexity => O(2 M X N), space Complexity => O(M+N)
         // int row = matrix.length;
         // int col = matrix[0].length;
         // int tempRow[] = new int[row];
@@ -64,7 +64,7 @@
         //     }
         // }
 
-        // Approach 3: optimum solution: time complexity => O(2 N X M), space complexity => O(1)
+// Approach 3: optimum solution: time complexity => O(2 N X M), space complexity => O(1)
         int row = matrix.length;
         int col = matrix[0].length;
         int col0 = 1;
