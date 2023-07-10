@@ -1,0 +1,23 @@
+public class Solution {
+	public static ArrayList<ArrayList<Long>> printPascal(int n) {
+		// Write your code here.
+		ArrayList<ArrayList<Long>> ans = new ArrayList<>();
+
+        for (int row = 1; row <= n; row++) {
+            ans.add(generateRow(row));
+        }
+        return ans;
+	}
+	private static ArrayList<Long> generateRow(int row) {
+        long ans = 1;
+        ArrayList<Long> ansRow = new ArrayList<>();
+        ansRow.add(1L);
+
+        for (int col = 1; col < row; col++) {
+            ans = ans * (row - col);
+            ans = ans / col;
+            ansRow.add(ans);
+        }
+        return ansRow;
+    }
+}
