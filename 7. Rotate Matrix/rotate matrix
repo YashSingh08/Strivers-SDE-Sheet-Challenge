@@ -1,0 +1,49 @@
+public class Solution {
+    public static void rotateMatrix(ArrayList<ArrayList<Integer>> mat, int n, int m) 
+    {
+        int row=0;
+        int col=0;
+        int rows=n;
+        int cols=m;
+        int prev;
+        int curr;
+        while(row<rows-1&&col<cols-1)
+        {   
+            prev=mat.get(row+1).get(col);
+            for(int i=col;i<cols;i++)
+            {
+                curr=mat.get(row).get(i);
+                mat.get(row).set(i,prev);
+                prev=curr;   
+            }
+            row++;
+            for(int i=row;i<rows;i++)
+            {
+                curr=mat.get(i).get(cols-1);
+                mat.get(i).set(cols-1,prev);
+                prev=curr;
+            }
+            cols--;
+            if(row<rows)
+            {
+                for(int i=cols-1;i>=col;i--)
+                {
+                curr=mat.get(rows-1).get(i);
+                mat.get(rows-1).set(i,prev);
+                prev=curr;
+                }
+            }
+            rows--;
+            if(col<cols)
+            {
+                for(int i=rows-1;i>=row;i--)
+                {
+                    curr=mat.get(i).get(col);
+                    mat.get(i).set(col,prev);
+                    prev=curr;
+                }
+            }
+            col++;
+        }
+    }
+}
