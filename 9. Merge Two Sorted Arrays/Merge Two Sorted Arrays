@@ -1,0 +1,29 @@
+public class Solution {
+    public static int[] ninjaAndSortedArrays(int arr1[], int arr2[], int m, int n) {
+        // Write your code here.
+        // Approach 1
+        // int index = 0;
+        // for(int i=m; i<m+n; i++) {
+        //     arr1[i] = arr2[index++];
+        // }
+        // Arrays.sort(arr1);
+        // return arr1;
+
+        // Approach 2
+        while(m>0 && n>0){
+            if(arr1[m-1] > arr2[n-1]) {
+                arr1[m+n-1] = arr1[m-1];
+                m--;
+            }
+            else {
+                arr1[m+n-1] = arr2[n-1];
+                n--;
+            }
+        }
+        while (n >0){
+            arr1[m+n-1] = arr2[n-1];
+            n--;
+        }
+        return arr1;
+    }
+}
