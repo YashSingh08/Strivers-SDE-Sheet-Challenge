@@ -1,0 +1,50 @@
+public class Solution 
+{
+    public static void sort012(int[] arr)
+    {
+        //Write your code here
+        // Approach brute force -> Simply Sort the array
+        // Time Complexity O(nlogn) space complexity O(1)
+        // Arrays.sort(arr);
+
+        // Approach better -> keep a count of 0's, 1's and 2's and add them sorted in an Array
+        // Time Complexity O(N+N) space complexity O(1)
+        // int count0 = 0;
+        // int count1 = 0;
+        // int count2 = 0;
+        // for(int i=0; i<arr.length; i++) {
+        //     if(arr[i] == 0) count0++;
+        //     else if(arr[i] == 1) count1++;
+        //     else count2++;
+        // }
+        // for(int i=0; i<count0; i++) arr[i] = 0;
+        // for(int i=count0; i<count0+count1; i++) arr[i] = 1;
+        // for(int i=count0+count1; i<arr.length; i++) arr[i] = 2;
+
+        // Approach optimal -> dutch national flag
+        // Time Complexity O(N) space complexity O(1)
+        int n = arr.length;
+        int low = 0;
+        int mid = 0;
+        int high = n-1;
+        while(mid <= high) {
+            if(arr[mid] == 0) {
+                swapper(arr, mid, low);
+                mid++;
+                low++;
+            }            
+            else if(arr[mid] == 1) {
+                mid++;
+            }
+            else{
+                swapper(arr, mid, high);
+                high--;
+            }
+        }
+    }
+    private static void swapper(int arr[], int first, int second) {
+        int temp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = temp;
+    }
+}
