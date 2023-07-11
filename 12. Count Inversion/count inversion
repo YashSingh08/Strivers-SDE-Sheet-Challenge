@@ -1,0 +1,59 @@
+public class Solution {
+    public static long getInversions(long arr[], int n) {
+        // Write your code here.
+        // brute force = time complexity->O(N^2) space complexity -> O(1)
+        // long count = 0;
+        // for(int i=0; i<n; i++) {
+        //     for(int j=i+1; j<n; j++) {
+        //         if(arr[i] > arr[j]) {
+        //             count++;
+        //         }
+        //     }
+        // }
+        // return count;
+
+        // optimal approach = using merge sort
+        // time complexity->O(NlogN) space complexity -> O(N)
+        return mergeSort(arr,0,(int)n-1);
+    }
+    public static long mergeSort(long arr[], int low, int high){
+        long inv = 0;
+        if(low >= high)return inv;
+        int mid = (low + high) / 2;
+        inv += mergeSort(arr, low, mid);
+        inv += mergeSort(arr, mid+1, high);
+        inv += merge(arr, low, mid,high);
+        return inv;
+    }
+    private static long merge(long[] arr, int low, int mid, int high) {
+        ArrayList<Long> temp = new ArrayList<>();
+        int left = low;
+        int right = mid + 1;
+        long cnt = 0;
+
+        while (left <= mid && right <= high) {
+            if (arr[left] <= arr[right]) {
+                temp.add(arr[left]);
+                left++;
+            } else {
+                temp.add(arr[right]);
+                cnt += (mid - left + 1);
+                right++;
+            }
+        }
+
+        while (left <= mid) {
+            temp.add(arr[left]);
+            left++;
+        }
+        while (right <= high) {
+            temp.add(arr[right]);
+            right++;
+        }
+
+        for (int i = low; i <= high; i++) {
+            arr[i] = temp.get(i - low);
+        }
+        return cnt;
+    }
+}
