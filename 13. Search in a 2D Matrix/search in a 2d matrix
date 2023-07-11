@@ -1,0 +1,24 @@
+public class Solution {
+    static boolean searchMatrix(ArrayList<ArrayList<Integer>> mat, int target) {
+        // Write your code here.
+        int row = mat.size();
+        int col = mat.get(0).size();
+        int low = 0;
+        int high = col-1;
+        if(mat.get(low).get(high) == target){
+            return true;
+        }
+        while(low < row && high >= 0){
+            if(mat.get(low).get(high) == target){
+                return true;
+            }
+            else if(mat.get(low).get(high) > target){
+                high--;
+            }
+            else if(mat.get(low).get(high) < target){
+                low++;
+            }
+        }
+        return false;
+    }
+}
