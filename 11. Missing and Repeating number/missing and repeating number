@@ -1,0 +1,103 @@
+public class Solution {
+
+    public static int[] missingAndRepeating(ArrayList<Integer> arr, int n) {
+        // Write your code here
+        // brute force -> search every number from 1 to n and keep a count
+        // time complexity -> O(N^2) space complexity -> O(1)        
+        // int num = 1;
+        // int mis = -1, rep = -1;
+        // while(num <= n) {
+        //     int count = 0;
+        //     for(int i=0; i<n; i++) {
+        //         if(arr.get(i) == num) {
+        //             count++;
+        //         }
+        //     }
+        //     if(count == 0) {
+        //         mis = num;
+        //     }
+        //     else if(count == 2) {
+        //         rep = num;
+        //     }
+        //     if(mis != -1 && rep != -1) break;
+        // }
+        // int ans[] = {mis, rep};
+        // return ans;
+
+        // better approach -> using hash array
+        // time complexity -> O(N+N) space complexity -> O(N)
+        int mis = -1, rep = -1;
+        int[] hash = new int[n+1];
+        for(int i=0; i<n; i++) {
+            hash[arr.get(i)]++;
+        }
+        for(int i=1; i<=n; i++) {
+            if(hash[i] == 2) rep = i;
+            else if(hash[i] == 0) mis = i;
+            if(mis != -1 && rep != -1) break;
+        }
+        int ans[] = {mis, rep};
+        // return ans;
+
+        // optimal approach -> using math
+        // time complexity -> O(N) space complexity -> O(1)
+        // long SN = (n * (n + 1)) / 2;
+        // long S2N = (n * (n + 1) * (2 * n + 1)) / 6;
+        // long S = 0, S2 = 0;
+        // for (int i = 0; i < n; i++) {
+        //     S += arr.get(i);
+        //     S2 += (long)arr.get(i) * (long)arr.get(i);
+        // }
+
+
+        // long eq1 = S - SN;
+        // long eq2 = S2 - S2N;
+
+        // long rep = (eq1 + eq2) / 2;
+        // long mis = rep - eq1;
+
+        // int ans[] = {(int)mis, (int)rep};
+        // return ans;
+
+        // optimal approach -> using XOR
+        // time complexity -> O(N) space complexity -> O(1)
+        // int xor = 0;
+
+        // for (int i = 0; i < n; i++) {
+        //     xor = xor ^ arr.get(i);
+        //     xor = xor ^ (i + 1);
+        // }
+
+        // int number = (xor & ~(xor - 1));
+
+        // int zero = 0;
+        // int one = 0;
+        // for (int i = 0; i < n; i++) {
+        //     if ((arr.get(i) & number) != 0) {
+        //         one = one ^ arr.get(i);
+        //     }
+        //     else {
+        //         zero = zero ^ arr.get(i);
+        //     }
+        // }
+
+        // for (int i = 1; i <= n; i++) {
+        //     if ((i & number) != 0) {
+        //         one = one ^ i;
+        //     }
+        //     else {
+        //         zero = zero ^ i;
+        //     }
+        // }
+
+        // int cnt = 0;
+        // for (int i = 0; i < n; i++) {
+        //     if (arr.get(i) == one) cnt++;
+        // }
+
+        // if (cnt == 2) return new int[] {one, zero};
+        // return new int[] {one, zero};
+
+
+    }
+}
