@@ -1,0 +1,54 @@
+public class Solution {
+	public static int findMajority(int[] arr, int n) {
+		// Write your code here.
+		// brute force
+        // Arrays.sort(arr);
+        // int count = 1;
+        // int temp = arr[0];
+        // int majCrit = n/2;
+        // for(int i=1; i<n; i++) {
+        //     if(arr[i] == temp) {
+        //         count++;
+        //     }
+        //     else if(arr[i] != temp) {
+        //         temp = arr[i];
+        //         count = 1;
+        //     }
+        //     if(count <= majCrit) {
+        //         continue;
+        //     }
+        //     else if(count > majCrit) {
+        //         break;
+        //     }
+        // }
+		// if(count <= majCrit) return -1;
+        // return temp;
+
+		// optimal solution -> moore's voting algo
+        int count = 0;
+        int ele =0;
+        int majCrit = n/2;
+        for(int i=0; i<n; i++) {
+            if(count== 0) {
+                count = 1;
+                ele = arr[i];
+            }
+            else if(arr[i] == ele) {
+                count++;
+            }
+            else{
+                count--;
+            }
+        }
+        int eleCount = 0;
+        for(int i=0; i<n; i++){
+            if(arr[i] == ele){
+                eleCount++;
+            }
+        }
+        if(eleCount > majCrit) {
+            return ele;
+        }
+        return -1;
+	}
+}
