@@ -1,0 +1,75 @@
+public class Solution 
+{
+    public static int reversePairs(ArrayList<Integer> arr) 
+    {
+        // Write your code here.
+        // brute force
+        // int n = arr.size();
+        // int count = 0;
+        // for(int i=0; i<n; i++) {
+        //     for(int j=i+1; j<n; j++) {
+        //         if(arr.get(i) > 2*arr.get(j)) {
+        //             count++;
+        //         }
+        //     }
+        // }
+        // return count;
+
+        int n = arr.size();
+        return mergeSort(arr, 0, n - 1);
+    }
+    private static int mergeSort(ArrayList<Integer> arr, int low, int high) {
+        int cnt = 0;
+        if (low >= high) return cnt;
+        int mid = (low + high) / 2 ;
+        cnt += mergeSort(arr, low, mid);  // left half
+        cnt += mergeSort(arr, mid + 1, high); // right half
+        cnt += countPairs(arr, low, mid, high); //Modification
+        merge(arr, low, mid, high);  // merging sorted halves
+        return cnt;
+    }
+    private static int countPairs(ArrayList<Integer> arr, int low, int mid, int high) {
+        int right = mid + 1;
+        int cnt = 0;
+        for (int i = low; i <= mid; i++) {
+            while (right <= high && arr.get(i) > 2 * arr.get(right)) right++;
+            cnt += (right - (mid + 1));
+        }
+        return cnt;
+    }
+    private static void merge(ArrayList<Integer> arr, int low, int mid, int high) {
+        ArrayList<Integer> temp = new ArrayList<>(); // temporary array
+        int left = low;      // starting index of left half of arr
+        int right = mid + 1;   // starting index of right half of arr
+
+        //storing elements in the temporary array in a sorted manner//
+
+        while (left <= mid && right <= high) {
+            if (arr.get(left) <= arr.get(right)) {
+                temp.add(arr.get(left));
+                left++;
+            } else {
+                temp.add(arr.get(right));
+                right++;
+            }
+        }
+
+        // if elements on the left half are still left //
+
+        while (left <= mid) {
+            temp.add(arr.get(left));
+            left++;
+        }
+
+        //  if elements on the right half are still left //
+        while (right <= high) {
+            temp.add(arr.get(right));
+            right++;
+        }
+
+        // transfering all elements from temporary to arr //
+        for (int i = low; i <= high; i++) {
+            arr.set(i,temp.get(i - low));
+        }
+    }
+}
