@@ -1,0 +1,41 @@
+public class Solution {
+	// public static int uniquePaths(int m, int n) {
+	// 	// Write your code here.
+	// 	// recursion
+	// 	return rec(0, 0, m-1, n-1);
+	// }
+	// private static int rec(int si, int sj, int ei, int ej) {
+	// 	// base cases
+	// 	if(si == ei && sj == ej) return 1;
+	// 	if(si > ei || sj > ej) return 0;
+
+	// 	// possible ways
+	// 	int right = rec(si, sj+1, ei, ej);
+	// 	int down = rec(si+1, sj, ei, ej);
+
+	// 	return right+down;
+	// }
+
+	public static int uniquePaths(int m, int n) {
+		// Write your code here.
+		// memoization
+		int dp[][] = new int[m+1][n+1];
+		for(int[] row : dp) {
+			Arrays.fill(row, -1);
+		}
+		return memo(0, 0, m-1, n-1, dp);
+	}
+	private static int memo(int si, int sj, int ei, int ej, int[][] dp) {
+		// base cases
+		if(si == ei && sj == ej) return 1;
+		if(si > ei || sj > ej) return 0;
+
+		// if already have value
+		if(dp[si][sj] != -1) return dp[si][sj];
+		// possible ways
+		int right = memo(si, sj+1, ei, ej, dp);
+		int down = memo(si+1, sj, ei, ej, dp);
+		dp[si][sj] = right+down;
+		return dp[si][sj];
+	}
+}
