@@ -1,0 +1,31 @@
+public class Solution{
+    public static List<int[]> pairSum(int[] arr, int s) {
+        // Write your code here.
+        // brute force
+        // int n = arr.length;
+        // Arrays.sort(arr);
+        // List<int[]> ans = new ArrayList<>();
+        // for(int i=0; i<n; i++) {
+        //     for(int j=i+1; j<n; j++) {
+        //         int sum = arr[i] + arr[j];
+        //         if(sum == s) {
+        //             ans.add(new int[] {arr[i], arr[j]});
+        //         }
+        //     }
+        // }
+        // return ans;
+
+
+        List<int[]> ans = new ArrayList<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int x : arr) {
+            if (map.containsKey(s - x)) {
+                int times = map.get(s - x);
+                while (times-- > 0) ans.add(new int[]{Math.min(x, s - x), Math.max(x, s - x)});
+            }
+            map.put(x, map.getOrDefault(x, 0) + 1);
+        }
+        Collections.sort(ans, Comparator.comparingInt(a -> a[0]));
+        return ans;
+    }
+}
