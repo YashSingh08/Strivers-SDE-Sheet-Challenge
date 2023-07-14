@@ -1,0 +1,42 @@
+public class Solution 
+{
+	public static int uniqueSubstrings(String input) 
+    {
+		//write your code here
+		// brute force
+		// if(input.length()==0)
+        //      return 0;
+        // int maxans = Integer.MIN_VALUE;
+        // for (int i = 0; i < input.length(); i++)
+        // {
+        //     Set < Character > se = new HashSet < > ();
+        //     for (int j = i; j < input.length(); j++) 
+        //     {
+        //         if (se.contains(input.charAt(j)))
+        //         {
+        //             maxans = Math.max(maxans, j - i);
+        //             break;
+        //         }
+        //         se.add(input.charAt(j));
+        //     }
+        // }
+        // return maxans;
+
+		// optimal approach
+        HashMap < Character, Integer > mpp = new HashMap < Character, Integer > ();
+
+        int left = 0, right = 0;
+        int n = input.length();
+        int len = 0;
+        while (right < n) {
+            if (mpp.containsKey(input.charAt(right)))
+                left = Math.max(mpp.get(input.charAt(right)) + 1, left);
+
+            mpp.put(input.charAt(right), right);
+
+            len = Math.max(len, right - left + 1);
+            right++;
+        }
+        return len;
+	}
+}
