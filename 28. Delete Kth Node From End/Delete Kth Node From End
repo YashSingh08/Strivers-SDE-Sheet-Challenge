@@ -1,0 +1,27 @@
+public class Solution
+{
+    public static Node removeKthNode(Node head, int K)
+    {
+        // Write your code here.
+
+        Node fast = head;
+        Node slow = head;
+        
+        while(K > 0) {
+            fast = fast.next;
+            K--;
+        }
+        if(fast == null) {
+            head = head.next;
+        }
+
+        else {
+            while(fast.next != null && fast != null) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+            slow.next = slow.next.next;
+        }
+        return head;
+    }
+}
