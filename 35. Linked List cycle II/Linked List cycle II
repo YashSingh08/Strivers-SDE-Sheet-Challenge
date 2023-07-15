@@ -1,0 +1,22 @@
+public class Solution {
+    public static Node firstNode(Node head) {
+        // Write your code here.
+        Node slow = head;
+        Node fast = head;
+        // int count = 0;
+        while(fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast) {
+                fast = head;
+                
+                while(slow != fast) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+                return slow;
+            }
+        }
+        return null;
+    }
+}
