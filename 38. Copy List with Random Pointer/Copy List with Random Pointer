@@ -1,0 +1,50 @@
+public class Solution {
+	public static LinkedListNode<Integer> cloneRandomList(LinkedListNode<Integer> head) {
+		// Write your code here.
+		// brute force
+		// HashMap<LinkedListNode, LinkedListNode> map = new HashMap<>();
+        // LinkedListNode temp = head;
+        // while(temp!=null){
+        //     LinkedListNode node = new LinkedListNode(temp.data);
+        //     map.put(temp,node);
+        //     temp= temp.next;
+        // }
+        // temp = head;
+        // while(temp!=null){
+        //     LinkedListNode node = map.get(temp);
+        //     node.next = map.get(temp.next)!=null?map.get(temp.next):null;
+        //     node.random = map.get(temp.random)!=null?map.get(temp.random):null;
+        //     temp=temp.next;
+        // }
+        // return map.get(head);
+		
+		// optimal approach
+		LinkedListNode<Integer> temp = head;
+		while(temp != null) {
+        	LinkedListNode<Integer> newNode = new LinkedListNode<Integer>(temp.data);
+        	newNode.next = temp.next;
+        	temp.next = newNode;
+        	temp = temp.next.next;
+    	}
+		LinkedListNode<Integer> itr = head;
+    	while(itr != null) {
+        	if(itr.random != null)
+            	itr.next.random = itr.random.next;
+        	itr = itr.next.next;
+    	}
+
+
+		LinkedListNode<Integer> dummy = new LinkedListNode<Integer>(0);
+    	itr = head;
+   		temp = dummy;
+		LinkedListNode<Integer> fast;
+    	while(itr != null) {
+        	fast = itr.next.next;
+        	temp.next = itr.next;
+        	itr.next = fast;
+        	temp = temp.next;
+        	itr = fast;
+    	}
+   		return dummy.next;
+	}
+}
