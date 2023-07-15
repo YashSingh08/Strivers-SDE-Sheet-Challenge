@@ -1,0 +1,45 @@
+public class Solution {
+
+	public static boolean isPalindrome(LinkedListNode<Integer> head) {
+		// Write your code here
+		// brute force
+		// ArrayList<Integer> tempList = new ArrayList<>();
+		// while(head != null) {
+		// 	tempList.add(head.data);
+		// 	head = head.next;
+		// }
+		// for(int i=0; i<tempList.size()/2; i++) {
+		// 	if(tempList.get(i) != tempList.get(tempList.size()-i-1)) return false;
+		// }
+		// return true;
+
+		// optimal approach		
+		LinkedListNode<Integer> slow = head;
+        LinkedListNode<Integer> fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+		LinkedListNode<Integer> pre = null;
+        LinkedListNode<Integer> curr = slow;
+        while (curr != null) {
+            LinkedListNode<Integer> next = curr.next;
+            curr.next = pre;
+            pre = curr;
+            curr = next;
+        }
+
+		LinkedListNode<Integer> temp1 = head;
+        LinkedListNode<Integer> temp2 = pre;
+        while (temp2 != null) {
+            if (!temp1.data.equals(temp2.data)) {
+                return false;
+            }
+            temp1 = temp1.next;
+            temp2 = temp2.next;
+        }
+        return true;
+	}
+}
