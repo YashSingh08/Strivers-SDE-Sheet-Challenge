@@ -1,0 +1,27 @@
+public class Solution {
+	public static int removeDuplicates(ArrayList<Integer> arr,int n) {
+		// Write your code here.
+		// brute force
+		// HashSet<Integer> set = new HashSet<>();
+		// for(int i=0; i<n; i++) {
+		// 	set.add(arr.get(i));
+		// }
+
+		// int j=0;
+		// int k = 0;
+		// for(int x : set) {
+		// 	arr.set(j++, x);
+		// 	k++;
+		// }
+		// return k;
+
+		// optimal approach
+		int i = 1;
+        for (int j = 1; j < n; j++) {
+            if (!arr.get(j-1).equals(arr.get(j))) {
+                i++;
+            }
+        }
+        return i;
+	}
+}
