@@ -1,0 +1,23 @@
+void rec(int index, vector<int> &arr, int k, vector < vector < int >> &ans, vector < int > &temp) {
+    if (index == arr.size()) {
+        if (accumulate(temp.begin(), temp.end(), 0) == k) {
+          ans.push_back(temp);
+        }
+        return;
+      }
+
+        temp.push_back(arr[index]);
+        rec(index+1, arr, k, ans, temp);
+        temp.pop_back();
+        rec(index+1, arr, k, ans, temp);
+}
+
+
+vector<vector<int>> findSubsetsThatSumToK(vector<int> arr, int n, int k)
+{
+    // Write your code here.
+    vector<vector<int>> ans;
+    vector<int> temp;
+    rec(0, arr, k, ans, temp);
+    return ans;
+}
