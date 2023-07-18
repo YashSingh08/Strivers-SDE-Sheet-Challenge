@@ -1,0 +1,27 @@
+#include <bits/stdc++.h> 
+using namespace std;
+
+void rec(vector<int> &arr, int index, vector<vector<int>> &ans, vector<int> &ds, set<vector<int>> &temp) {
+    if(index == arr.size()){
+        temp.insert(ds);
+        return;
+    }
+
+    ds.push_back(arr[index]);
+    rec(arr, index+1, ans, ds, temp);
+    ds.pop_back();
+    rec(arr, index+1, ans, ds, temp);
+}
+vector<vector<int>> uniqueSubsets(int n, vector<int> &arr)
+{
+    // Write your code here.
+    vector<vector<int>> ans;
+    vector<int> ds;
+    set<vector<int>> temp;
+    sort(arr.begin(), arr.end());
+    rec(arr, 0, ans, ds, temp);
+    for(auto it = temp.begin(); it != temp.end(); it++) {
+        ans.push_back(*it);
+    }
+    return ans;
+}
