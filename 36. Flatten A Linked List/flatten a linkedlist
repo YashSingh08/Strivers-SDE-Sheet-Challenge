@@ -1,0 +1,35 @@
+Node* mergeTwoLists(Node* first, Node* second) {
+	Node *temp = new Node(0);
+    Node *res = temp; 
+    
+    while(first != NULL && second != NULL) {
+        if(first->data < second->data) {
+            temp->child = first; 
+            temp = temp->child; 
+            first = first->child; 
+        }
+        else {
+            temp->child = second;
+            temp = temp->child; 
+            second = second->child; 
+        }
+    }
+    
+    if(first) temp->child = first; 
+    else temp->child = second; 
+    
+    return res -> child; 
+}
+Node* flattenLinkedList(Node* head) 
+{
+	// Write your code here
+	if(head == nullptr || head->next == nullptr) {
+		return head;
+	}
+	Node* newLL = flattenLinkedList(head->next);
+	head->next = nullptr;
+	head = mergeTwoLists(head, newLL);
+
+	return head;
+
+}
