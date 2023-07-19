@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+void rec(int index, int n, vector<int> &arr, int target, vector<int> &list, vector<vector<int>> &ans) {
+	if(target == 0) {
+		ans.push_back(list);
+		return;
+	}
+	
+	for (int i = index; i < n; i++) {
+    	if (i > index && arr[i] == arr[i - 1]) continue;
+    	if (arr[i] > target) break;
+    	list.push_back(arr[i]);
+    	rec(i + 1, n, arr, target - arr[i], list, ans);
+    	list.pop_back();
+  	}
+}
+vector<vector<int>> combinationSum2(vector<int> &arr, int n, int target){
+	// Write your code here.
+	sort(arr.begin(), arr.end());
+	vector<vector<int>> ans;
+	vector<int> list;
+	rec(0, n, arr, target, list, ans);
+	return ans;
+}
