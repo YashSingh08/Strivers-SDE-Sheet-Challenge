@@ -1,0 +1,37 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+
+	public static int palindromePartitioning(String str) {
+	    // Write your code here
+		int[][] dp=new int[str.length()][str.length()];
+       for(int[] row:dp){
+           Arrays.fill(row,-1);
+       }
+    return memo(str,0,str.length()-1,dp);
+}
+   private static int memo(String s,int i,int j,int[][] dp){
+       if(i>=j) return 0;
+       if(checkPali(s,i,j)) return 0;
+       if(dp[i][j]!=-1) return dp[i][j];
+       int mini=Integer.MAX_VALUE;
+       
+       for(int k=i;k<=j-1;k++){
+           int temp=1+memo(s,i,k,dp)+memo(s,k+1,j,dp);
+            mini=Math.min(temp,mini);
+       }
+       dp[i][j]=mini;
+       return mini;
+   }
+   private static boolean checkPali(String s,int first,int last){
+       while(first<last){
+           if(s.charAt(first)==s.charAt(last)){
+               first++;
+               last--;
+           }else {
+               return false;
+           }
+       }
+       return true;
+   }
+}
