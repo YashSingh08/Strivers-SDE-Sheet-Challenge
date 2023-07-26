@@ -1,0 +1,46 @@
+
+public class Solution {
+
+    public static int cutLogs(int k, int n) {
+        //Write your code here
+        int[][] dp = new int[k + 1][n + 1];
+        for (int i = 0; i <= k; i++) {
+            for (int j = 0; j <= n; j++) {
+                dp[i][j] = -1;
+            }
+        }
+        return memo(k, n, dp);
+    }
+    public static int memo(int k, int n, int[][] dp) {
+        // Base cases
+        if (n <= 1 || k == 1) {
+            return n;
+        }
+
+        if (dp[k][n] != -1) {
+            return dp[k][n];
+        }
+
+        // Use binary search
+        int ans = Integer.MAX_VALUE;
+        int low = 1, high = n;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            int cannotCut = memo(k - 1, mid - 1, dp);
+            int canCut = memo(k, n - mid, dp);
+
+            // Update answer with minimum value
+            ans = Math.min(ans, 1 + Math.max(cannotCut, canCut));
+
+            if (cannotCut < canCut) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        dp[k][n] = ans;
+        return ans;
+    }
+}
