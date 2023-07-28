@@ -1,0 +1,77 @@
+import java.util.*;
+class Node{
+    Node[] links = new Node[2];
+    boolean containsKey(int key){
+        return links[key] != null;
+    }
+    Node get(int key){
+        return links[key];
+    }
+    void put(int key, Node node){
+        links[key] = node;
+    }
+}
+class Trie{
+    private static Node root;
+    Trie(){
+        this.root = new Node();
+    }
+    public static void insert(int num){
+        Node node = root;
+        for(int i=31; i>=0; i--){
+            int mask = (num >> i) & 1;
+            if(!node.containsKey(mask)){
+                node.put(mask, new Node());
+            }
+            node = node.get(mask);
+        }
+    }
+    public int getXOR(int num){
+        Node node = root;
+        int maxi = 0;
+        for(int i=31; i>=0; i--){
+            int mask = (num >> i) & 1;
+            if(node.containsKey(1 - mask)){
+                maxi = maxi | (1 << i);
+                node = node.get(1 - mask);
+            }
+            else node = node.get(mask);
+        }
+        return maxi;
+    }
+}
+public class Solution {
+    public static ArrayList<Integer> maxXorQueries(ArrayList<Integer> arr, ArrayList<ArrayList<Integer>> queries) {
+        Collections.sort(arr); 
+        ArrayList<ArrayList<Integer>> queriesList = new ArrayList<ArrayList<Integer>>(); 
+        int size = queries.size(); 
+        for(int i = 0;i<size;i++) {
+            ArrayList<Integer> temp = new ArrayList<Integer>(); 
+            temp.add(queries.get(i).get(1)); 
+            temp.add(queries.get(i).get(0)); 
+            temp.add(i); 
+            queriesList.add(temp); 
+        }
+        Collections.sort(queriesList, new Comparator<ArrayList<Integer>> () {
+            @Override
+            public int compare(ArrayList<Integer> a, ArrayList<Integer> b) {
+                return a.get(0).compareTo(b.get(0));
+            }
+        });
+        int ind = 0;
+        int n = arr.size(); 
+        Trie trie = new Trie(); 
+        ArrayList<Integer> ans = new ArrayList<Integer>(size); 
+        for(int i = 0;i<size;i++) ans.add(-1); 
+        for(int i = 0;i<size;i++) {
+            while(ind<n && arr.get(ind) <= queriesList.get(i).get(0)) {
+                 trie.insert(arr.get(ind)); 
+                 ind++; 
+            }
+            int queryIndex = queriesList.get(i).get(2); 
+            if(ind != 0) ans.set(queryIndex, trie.getXOR(queriesList.get(i).get(1)));
+            else ans.set(queryIndex, -1); 
+        }
+        return ans; 
+    }
+}
