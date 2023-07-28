@@ -1,0 +1,67 @@
+import java.util.* ;
+import java.io.*; 
+/************************************************************
+
+    Following is the Binary Tree node structure:
+    
+   class TreeNode {
+	    int data;
+	    TreeNode left;
+	    TreeNode right;
+
+	    TreeNode(int data) {
+		    this.data = data;
+		    this.left = null;
+		    this.right = null;
+	    }
+
+    }
+
+************************************************************/
+
+import java.util.ArrayList;
+
+public class Solution {
+	public static  ArrayList<Integer> traverseBoundary(TreeNode root){
+		// Write your code here.
+		ArrayList<Integer> ans = new ArrayList<>();
+		if(!isLeaf(root))
+			ans.add(root.data);
+		leftTree(root, ans);
+        leaf(root, ans);
+        rightTree(root, ans);
+        return ans;
+	}
+	private static boolean isLeaf(TreeNode node) {
+        return node != null && node.left == null && node.right == null;
+    }
+	private static void leaf(TreeNode root, ArrayList<Integer> ans){
+        if(isLeaf(root)){
+            ans.add(root.data);
+            return;
+        }
+        if(root.left!=null) leaf( root.left, ans );
+        if(root.right!=null) leaf( root.right, ans);
+    }
+	private static void rightTree(TreeNode root, ArrayList<Integer> ans){
+        TreeNode curr = root.right;
+        ArrayList<Integer> temp = new ArrayList<>();
+        while(curr!=null){
+            if(isLeaf(curr)==false) temp.add(curr.data);
+            if(curr.right!=null) curr = curr.right;
+            else curr  = curr.left;
+        }
+        int i;
+        for(i = temp.size()-1; i>=0;--i){
+            ans.add(temp.get(i));
+        }
+    }
+	private static void leftTree(TreeNode root, ArrayList<Integer> ans){
+        TreeNode curr = root.left;
+        while(curr!=null){
+            if(isLeaf(curr)==false) ans.add(curr.data);
+            if(curr.left!=null) curr = curr.left;
+            else curr  = curr.right;
+        }
+    }
+}
